@@ -1,8 +1,8 @@
-import Person from "./entities/Person.js";
-import Document from "./entities/Document.js";
-import Book from "./entities/Book.js";
-import Periodical from "./entities/Periodical.js";
-import Gender from "./entities/Gender.js";
+import Person from "./entities/Person";
+import Document from "./entities/Document";
+import Book from "./entities/Book";
+import Periodical from "./entities/Periodical";
+import Gender from "./entities/Gender";
 let person1 = new Person("Marcelo", new Date(1989, 1, 16), Gender.male);
 let person2 = new Person("Erick", new Date(10, 10, 1980), Gender.male);
 let document1 = new Document("Holden Caulfield", "the anti story", person1, new Date(3, 3, 1930));
