@@ -1,7 +1,4 @@
-enum Gender {
-    female= "f",
-    male = "m"
-}
+import Gender from "./Gender"
 
 export class Person {
     name: string;

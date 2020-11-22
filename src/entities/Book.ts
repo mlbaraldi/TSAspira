@@ -11,11 +11,6 @@ class Book extends Document{
         this.isbn = isbn
         this.edition = edition
         this.volume = volume
-        this.title = title
-        this.author = author
-        this.subtitle = subtitle
-        this.publishedAt = publishedAt
-
     }
 }
 

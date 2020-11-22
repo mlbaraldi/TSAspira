@@ -4,10 +4,9 @@ export class Document {
     title: string
     subtitle: string
     author: Person
-    publishedAt: Date
-    //falta colocar OU NUMBER no publishedat
+    publishedAt: Date | number
 
-    constructor(title: string, subtitle: string, author: Person, publishedAt: Date) {
+    constructor(title: string, subtitle: string, author: Person, publishedAt: Date,) {
         this.title = title
         this.author = author
         this.subtitle = subtitle

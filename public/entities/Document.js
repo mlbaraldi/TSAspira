@@ -1,5 +1,4 @@
 export class Document {
-    //falta colocar OU NUMBER no publishedat
     constructor(title, subtitle, author, publishedAt) {
         this.title = title;
         this.author = author;
