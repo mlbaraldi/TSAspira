@@ -1,8 +1,7 @@
-import Person from "./entities/Person"
-import Document from "./entities/Document"
-import Book from "./entities/Book"
-import Periodical from "./entities/Periodical"
-import Gender from "./entities/Gender"
+import Person, { Gender } from "./entities/Person.js"
+import Document from "./entities/Document.js"
+import Book from "./entities/Book.js"
+import Periodical from "./entities/Periodical.js"
 
 let person1 = new Person("Marcelo", new Date(1989, 1, 16), Gender.male);
 let person2 = new Person("Erick", new Date(10, 10, 1980), Gender.male);
