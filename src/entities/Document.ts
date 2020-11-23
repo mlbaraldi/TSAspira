@@ -1,4 +1,4 @@
-import Person from "./Person.js";
+import Person from "./Person";
 
 export class Document {
     title: string
@@ -6,7 +6,7 @@ export class Document {
     author: Person
     publishedAt: Date | number
 
-    constructor(title: string, subtitle: string, author: Person, publishedAt: Date,) {
+    constructor(title: string, subtitle: string, author: Person, publishedAt: Date) {
         this.title = title
         this.author = author
         this.subtitle = subtitle
