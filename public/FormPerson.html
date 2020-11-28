@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+</head>
+<body>
+    <header>
+        <h1>Cadastro de Pessoas</h1>
+        <p>Preencha todos os campos abaixo:</p>
+    </header>
+    <form id="cadastroPessoa" novalidate>
+        <input type="text" id="Nome" placeholder="Informe seu Nome Completo">
+        <br><br>
+
+        <input type="date" id="Nascimento" placeholder="Data de Nascimento">
+        <br><br>
+
+        <select id="Genero" required>
+            <option value=""> Selecione o sexo</option>
+            <option value="f">Feminino</option>
+            <option value="m">Masculino</option>
+        </select>
+        <br><br>
+
+        <button> Verificar Dados</button>
+    </form>
+
+    <div id="retorno"></div>
+
+    <script src="FormPerson.js" type="module"></script>
+</body>
+
+</html>
