@@ -2,47 +2,88 @@ import { Gender } from "./entities/Person.js"
 import Person from "./entities/Person.js"
 
 //ligando espaços do formulário à variáveis
-const formulario = document.querySelector<HTMLFormElement>("#cadastroPessoa")!
-const nome = document.querySelector<HTMLInputElement>("#Nome")!
-const nascimento = document.querySelector<HTMLInputElement>("#Nascimento")!
-const genero = document.querySelector<HTMLSelectElement>("#Genero")!
-const enviar = document.querySelector<HTMLInputElement>("#Enviar")!
-let p = document.querySelector<HTMLDivElement>("#retorno")!
+const Formulario = document.querySelector<HTMLFormElement>("#cadastroPessoa")!
+const Nome = document.querySelector<HTMLInputElement>("#Nome")!
+const Nascimento = document.querySelector<HTMLInputElement>("#Nascimento")!
+const Genero = document.querySelector<HTMLSelectElement>("#Genero")!
+const Enviar = document.querySelector<HTMLInputElement>("#Enviar")!
+const p = document.querySelector<HTMLDivElement>("#retorno")!
 
-//retorno no console para ver se está tudo certo
-console.log(formulario, nome, nascimento, genero, enviar, p)
+//array de Pessoas registradas
+const Persons: Person[] = []
+
+//função que limpa alterações
+function limpar() {
+    p.innerText = ""
+    Nome.className = Nascimento.className = Genero.className = ""
+}
 
 //traz foco para primeiro form
-nome.focus()
+Nome.focus()
 
-formulario.addEventListener("submit", (event: Event) => event.preventDefault())
-
-
-function validar() {
-    console.log("Tentando a validação")
-    const nomeLimpo = nome.value.trim()
+// ao executar o botão:
+Formulario.addEventListener('submit', (e: Event) => {
+    limpar()
+    e.preventDefault()
+    const nomeLimpo = Nome.value.trim()
     const regexNome = /\w+\s\w+/g
     
-    //validação para nome
+    //validação para nome vazio
     if (!nomeLimpo) {
-        console.log("Campo nome não preenchido")
-        p.textContent += "Campo nome não preenchido"
-        nome.focus()
+        p.innerText = 'O campo Nome é obrigatório!'
+        Nome.focus()
+        return
     }
+
+    //validação para sobrenome
     if (!regexNome.test(nomeLimpo)) {
         p.textContent += "O nome deve ser Completo"
-        
+        Nome.focus()
+        return
     }
 
     //validação de nascimento
-    if (!nascimento.value) {
-        p.innerText = "Campo Nascimento não preenchido"
+    if (!Nascimento.value) {
+        p.innerText = "Campo nascimento não preenchido"
+        Nascimento.focus()
+        return
     }
-}
 
+    //validação gênero
+    if(!Genero.value) {
+        p.innerText = "Selecione o campo de Sexo"
+        Genero.focus()
+        return
+    }
 
-function limpar() {
-    p.innerText = nome.value = nascimento.value = genero.value = ""
-    nome.className = nascimento.className = genero.className = ""
+    try {
+    //instanciação de usuário
+    let data = new Date(Nascimento.value) //TODO corrigir bugs de data
+    let person = new Person(Nome.value, data, Genero.value === "f" ? Gender.female : Gender.male)
+    Persons.push(person)
+    p.innerText = "\n Pessoa adicionada com Sucesso!"
+    console.log(Persons)    
+
+    //serialização
+    localStorage.setItem("Persons", JSON.stringify(Persons))
+    //showPerson()
+    
+} catch (error: any) {
+    console.error(error)
+    p.innerText = "\n Aconteceu algum erro ao instanciar usuário"
 }
-window.onload = limpar()
+})
+
+// function showPerson() {
+//     const data = JSON.parse(localStorage.getItem('Usuarios')!)
+    
+//     //Persons.splice(0)
+    
+//     for (const item of data) {
+//         Persons.push(new Person(
+//         item.name,
+//         item.birth,
+//         item.gender,
+//         ))
+//       }
+//       }
