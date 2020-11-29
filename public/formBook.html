@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+</head>
+<body>
+    <header>
+        <h1>Cadastro de Livros e Periódicos</h1>
+        <p>Preencha todos os campos abaixo:</p>
+    </header>
+
+    <form id="LivrououPeriodico">
+        <select id="objectType" required>
+            <option value=""> Selecione o tipo:</option>
+            <option value="f">Livro</option>
+            <option value="m">Periódico</option>
+        </select>
+    </form>
+
+    <form id="Livros" novalidate>
+        <input type="text" id="title" placeholder="Título">
+        <input type="text" id="subtitle" placeholder="Subtítulo">
+        <input type="text" id="author" placeholder="Autor">
+        <input type="number" id="edition" placeholder="Edição">
+        <input type="text" id="Title" placeholder="Título">
+        <input type="number" id="volume" placeholder="Volume">
+        <input type="number" id="isbn" placeholder="isbn">
+        <input type="date" id="Title" placeholder="Publicado em">
+        <input type="date" id="Nascimento" placeholder="Data de Nascimento">
+        <br><br>
+
+        <button> Registrar Usuário</button>
+    </form>
+
+    <div id="retorno"></div>
+
+    <script src="formBook.js" type="module"></script>
+    <script src="./entities/Book.js"></script>
+    <script src="./entities/Periodical.js"></script>
+
+</body>
+
+</html>
