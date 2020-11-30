@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Cadastro</title>
+
+    <script src="formBook.js" type="module"></script>
+
 </head>
 <body>
     <header>
@@ -11,34 +15,41 @@
         <p>Preencha todos os campos abaixo:</p>
     </header>
 
-    <form id="LivrououPeriodico">
-        <select id="objectType" required>
+    <form id="form" novalidate>
+        <!-- Seleção de tipo de cadastro-->
+        <select id="tipo" required> 
             <option value=""> Selecione o tipo:</option>
-            <option value="f">Livro</option>
-            <option value="m">Periódico</option>
+            <option value="b">Livro</option>
+            <option value="p">Periódico</option>
         </select>
-    </form>
-
-    <form id="Livros" novalidate>
-        <input type="text" id="title" placeholder="Título">
-        <input type="text" id="subtitle" placeholder="Subtítulo">
-        <input type="text" id="author" placeholder="Autor">
-        <input type="number" id="edition" placeholder="Edição">
-        <input type="text" id="Title" placeholder="Título">
-        <input type="number" id="volume" placeholder="Volume">
-        <input type="number" id="isbn" placeholder="isbn">
-        <input type="date" id="Title" placeholder="Publicado em">
-        <input type="date" id="Nascimento" placeholder="Data de Nascimento">
         <br><br>
+        
+        <div id="divForm" hidden = "true">
+        <!-- atributos comuns (de Document) -->
+        <input type="text" id="title" placeholder="Título"> <br>
+        <input type="text" id="subtitle" placeholder="Subtítulo"> <br>
+        <select id="author" required></select><br>
+        <input type="date" id="published" placeholder="Publicado em"><br>
+        <input type="number" id="volume" placeholder="Volume"> <br>
 
-        <button> Registrar Usuário</button>
+        
+        <!-- atributos para Book -->
+        <div id="divBook" hidden = "true">
+        <input type="number" id="edition" placeholder="Edição"><br>
+        <input type="number" id="isbn" placeholder="isbn">
+        </div>
+        
+        <!--atributos para Periodical -->
+        <div id="divPeriodical" hidden= "true">
+        <input type="number" id="issue" placeholder="Numero"><br>
+        <input type="number" id="issn" placeholder="issn">
+        </div>
+        <br><br>
+        <button> Registrar</button>
     </form>
-
+    </div>
     <div id="retorno"></div>
 
-    <script src="formBook.js" type="module"></script>
-    <script src="./entities/Book.js"></script>
-    <script src="./entities/Periodical.js"></script>
 
 </body>
 

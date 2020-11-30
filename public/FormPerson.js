@@ -1,5 +1,6 @@
 import { Gender } from "./entities/Person.js";
 import Person from "./entities/Person.js";
+import clear from "./entities/clear.js";
 //ligando espaços do formulário à variáveis
 const Formulario = document.querySelector("#cadastroPessoa");
 const Nome = document.querySelector("#Nome");
@@ -9,16 +10,12 @@ const Enviar = document.querySelector("#Enviar");
 const p = document.querySelector("#retorno");
 //array de Pessoas registradas
 const Persons = [];
-//função que limpa alterações
-function limpar() {
-    p.innerText = "";
-    Nome.className = Nascimento.className = Genero.className = "";
-}
 //traz foco para primeiro form
 Nome.focus();
+clear(p);
 // ao executar o botão:
 Formulario.addEventListener('submit', (e) => {
-    limpar();
+    clear(p);
     e.preventDefault();
     const nomeLimpo = Nome.value.trim();
     const regexNome = /\w+\s\w+/g;
@@ -55,21 +52,9 @@ Formulario.addEventListener('submit', (e) => {
         console.log(Persons);
         //serialização
         localStorage.setItem("Persons", JSON.stringify(Persons));
-        //showPerson()
     }
     catch (error) {
         console.error(error);
         p.innerText = "\n Aconteceu algum erro ao instanciar usuário";
     }
 });
-// function showPerson() {
-//     const data = JSON.parse(localStorage.getItem('Usuarios')!)
-//     //Persons.splice(0)
-//     for (const item of data) {
-//         Persons.push(new Person(
-//         item.name,
-//         item.birth,
-//         item.gender,
-//         ))
-//       }
-//       }
