@@ -2,11 +2,12 @@ import Document from "./entities/Document.js"
 import Periodical from "./entities/Periodical.js"
 import Book from "./entities/Book.js"
 import clear from "./entities/clear.js"
+import cleanString from "./functions/cleanString.js"
 
 console.log("running formBook script")
 
 //ligando espaços do formulário à variáveis
-const form = document.querySelector<HTMLFormElement>("#form")!
+const form = document.querySelector("#form")!
 const tipo = document.querySelector<HTMLFormElement>("#tipo")!
 const title = document.querySelector<HTMLInputElement>("#title")!
 const subtitle = document.querySelector<HTMLInputElement>("#subtitle")!
@@ -21,10 +22,19 @@ const divPeriodical = document.querySelector<HTMLDivElement>("#divPeriodical")!
 const divBook = document.querySelector<HTMLDivElement>("#divBook")!
 const p = document.querySelector<HTMLDivElement>("#retorno")!
 const divForm = document.querySelector<HTMLDivElement>("#divForm")!
+const table = document.querySelector('table')!
 
 //instanciação da lista de livros e periódicos
 const bookList: Book[] = []
 const periodicalList: Periodical[] = []
+
+//apresentação da tabela
+if (JSON.parse(localStorage.getItem("BookList")!)) {
+    let listaLivro = JSON.parse(localStorage.getItem("BookList")!)
+    let listaOrdenada = [...listaLivro].sort()
+    console.log(listaLivro)
+}
+
 
 
 //preencher Author Select com Persons de LocalStorage
@@ -78,7 +88,7 @@ form.addEventListener("submit", (e: Event) => {
             }
             try {
                 //instanciação de periódico com valores do form
-                let book = new Book(parseInt(isbn.value), parseInt(edition.value), parseInt(volume.value), title.value, subtitle.value, localPersons[author.value], data)
+                let book = new Book(parseInt(isbn.value), parseInt(edition.value), parseInt(volume.value), cleanString(title.value), cleanString(subtitle.value), localPersons[author.value], data)
                 //inserção objeto no array
                 bookList.push(book)
                 p.innerText = "Registrado o livro do Autor " + book.author.name
@@ -99,7 +109,7 @@ form.addEventListener("submit", (e: Event) => {
                 }
                 try {
                     //instanciação de periódico com valores do form
-                    let periodical = new Periodical(parseInt(issn.value), parseInt(volume.value), parseInt(issue.value), title.value, subtitle.value, localPersons[author.value], data)
+                    let periodical = new Periodical(parseInt(issn.value), parseInt(volume.value), parseInt(issue.value), cleanString(title.value), cleanString(subtitle.value), localPersons[author.value], data)
                     //inserção objeto no array
                     periodicalList.push(periodical)
                     p.innerText = "Registrado o Periódico do Autor " + periodical.author.name

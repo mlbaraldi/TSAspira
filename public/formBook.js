@@ -1,6 +1,7 @@
 import Periodical from "./entities/Periodical.js";
 import Book from "./entities/Book.js";
 import clear from "./entities/clear.js";
+import cleanString from "./functions/cleanString.js";
 console.log("running formBook script");
 //ligando espaços do formulário à variáveis
 const form = document.querySelector("#form");
@@ -18,9 +19,16 @@ const divPeriodical = document.querySelector("#divPeriodical");
 const divBook = document.querySelector("#divBook");
 const p = document.querySelector("#retorno");
 const divForm = document.querySelector("#divForm");
+const table = document.querySelector('table');
 //instanciação da lista de livros e periódicos
 const bookList = [];
 const periodicalList = [];
+//apresentação da tabela
+if (JSON.parse(localStorage.getItem("BookList"))) {
+    let listaLivro = JSON.parse(localStorage.getItem("BookList"));
+    let listaOrdenada = [...listaLivro].sort();
+    console.log(listaLivro);
+}
 //preencher Author Select com Persons de LocalStorage
 const localPersons = JSON.parse(localStorage.getItem("Persons"));
 for (let i = 0; i < localPersons.length; i++) {
@@ -71,7 +79,7 @@ form.addEventListener("submit", (e) => {
         }
         try {
             //instanciação de periódico com valores do form
-            let book = new Book(parseInt(isbn.value), parseInt(edition.value), parseInt(volume.value), title.value, subtitle.value, localPersons[author.value], data);
+            let book = new Book(parseInt(isbn.value), parseInt(edition.value), parseInt(volume.value), cleanString(title.value), cleanString(subtitle.value), localPersons[author.value], data);
             //inserção objeto no array
             bookList.push(book);
             p.innerText = "Registrado o livro do Autor " + book.author.name;
@@ -91,10 +99,11 @@ form.addEventListener("submit", (e) => {
         }
         else if (!issue.value) {
             p.innerText = "Preencha corretamente o campo Número";
+            return;
         }
         try {
             //instanciação de periódico com valores do form
-            let periodical = new Periodical(parseInt(issn.value), parseInt(volume.value), parseInt(issue.value), title.value, subtitle.value, localPersons[author.value], data);
+            let periodical = new Periodical(parseInt(issn.value), parseInt(volume.value), parseInt(issue.value), cleanString(title.value), cleanString(subtitle.value), localPersons[author.value], data);
             //inserção objeto no array
             periodicalList.push(periodical);
             p.innerText = "Registrado o Periódico do Autor " + periodical.author.name;
