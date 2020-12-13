@@ -15,4 +15,6 @@ export function cleanString(entrada) {
     }
     return saidaNome.join(' ');
 }
+export const sorting = (a, b) => a.title.localeCompare(b.title);
+export const sortingPerson = (a, b) => a.name.localeCompare(b.name);
 export default cleanString;

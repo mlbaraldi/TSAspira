@@ -2,7 +2,7 @@ import Document from "./entities/Document.js"
 import Periodical from "./entities/Periodical.js"
 import Book from "./entities/Book.js"
 import clear from "./entities/clear.js"
-import cleanString from "./functions/cleanString.js"
+import cleanString, { sorting } from "./functions/cleanString.js"
 
 console.log("running formBook script")
 
@@ -28,14 +28,6 @@ const table = document.querySelector('table')!
 const bookList: Book[] = []
 const periodicalList: Periodical[] = []
 
-//apresentação da tabela
-if (JSON.parse(localStorage.getItem("BookList")!)) {
-    let listaLivro = JSON.parse(localStorage.getItem("BookList")!)
-    let listaOrdenada = [...listaLivro].sort()
-    console.log(listaLivro)
-}
-
-
 
 //preencher Author Select com Persons de LocalStorage
 const localPersons = JSON.parse(localStorage.getItem("Persons")!)
@@ -48,12 +40,15 @@ for (let i = 0; i < localPersons.length; i++){
 //handler de mudança de Book e Periodical
 tipo.addEventListener("change", (e: Event) => {
     divForm.hidden = false
+    table.innerHTML = ''
     if (tipo.value == "b") {
         divBook.hidden = false
         divPeriodical.hidden = true
+        showBooks();
     } else if (tipo.value == "p") {
         divBook.hidden = true
         divPeriodical.hidden = false
+        showPeriodical();
     } else {
         divForm.hidden = true
     }
@@ -121,3 +116,80 @@ form.addEventListener("submit", (e: Event) => {
         }  
         }
 })
+
+
+
+////////////////////////////////////////
+
+function showBooks() {
+    if (JSON.parse(localStorage.getItem("BookList")!)) {
+    let data = ''
+    const localBooks = JSON.parse(localStorage.getItem("BookList")!)
+    const orderedLocalBooks = [...localBooks].sort(sorting)
+
+    console.log(orderedLocalBooks)
+ 
+    for (let i = 0; i < orderedLocalBooks.length; i++){
+        data += `
+        <tr>
+            <td>${ orderedLocalBooks[i].title }</td>
+            <td>${ orderedLocalBooks[i].subtitle }</td>
+            <td>${ orderedLocalBooks[i].publishedAt.substring(0,4) }</td>
+            <td>${ orderedLocalBooks[i].author.name }</td>
+            <td>${ orderedLocalBooks[i].edition }</td>
+            <td>${ orderedLocalBooks[i].volume }</td>
+        </tr>
+        `
+    }
+
+    table.innerHTML = `
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Subtítulo</th>
+            <th>Ano de Publicação</th>
+            <th>Autor</th>
+            <th>Edição</th>
+            <th>Volume</th>
+        </tr>
+    </thead>
+    <tbody>
+        ${data}
+    </tbody>
+    `
+}
+}
+
+function showPeriodical() {
+    if (JSON.parse(localStorage.getItem("PeriodicalList")!)) {
+        let data = ''
+        const localPeriodical = JSON.parse(localStorage.getItem("PeriodicalList")!)
+        const orderedLocalPeriodical = [...localPeriodical].sort(sorting)
+
+    for (let i = 0; i < orderedLocalPeriodical.length; i++){
+        data += `
+        <tr>
+            <td>${ orderedLocalPeriodical[i].title }</td>
+            <td>${ orderedLocalPeriodical[i].subtitle }</td>
+            <td>${ orderedLocalPeriodical[i].publishedAt.substring(0,4) }</td>
+            <td>${ orderedLocalPeriodical[i].author.name }</td>
+        </tr>
+        `
+    }
+
+    table.innerHTML = `
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Subtítulo</th>
+            <th>Ano de Publicação</th>
+            <th>Autor</th>
+        </tr>
+    </thead>
+    <tbody>
+        ${data}
+    </tbody>
+    `
+}
+
+}

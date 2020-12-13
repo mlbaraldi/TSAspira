@@ -1,16 +1,18 @@
 import { Gender } from "./entities/Person.js";
 import Person from "./entities/Person.js";
 import clear from "./entities/clear.js";
-import cleanString from "./functions/cleanString.js";
+import cleanString, { sortingPerson } from "./functions/cleanString.js";
 //ligando espaços do formulário à variáveis
 const Formulario = document.querySelector("#cadastroPessoa");
 const Nome = document.querySelector("#Nome");
 const Nascimento = document.querySelector("#Nascimento");
 const Genero = document.querySelector("#Genero");
 const p = document.querySelector("#retorno");
+const table = document.querySelector("table");
 //array de Pessoas registradas
 const Persons = [];
 //traz foco para primeiro form
+showPersons();
 Nome.focus();
 clear(p);
 // ao executar o botão:
@@ -54,9 +56,47 @@ Formulario.addEventListener('submit', (e) => {
         console.log(Persons);
         //serialização
         localStorage.setItem("Persons", JSON.stringify(Persons));
+        showPersons();
     }
     catch (error) {
         console.error(error);
         p.innerText = "\n Aconteceu algum erro ao instanciar usuário";
     }
 });
+/////////////////////////////////////
+function showPersons() {
+    if (JSON.parse(localStorage.getItem("Persons"))) {
+        let data = '';
+        const localPersons = JSON.parse(localStorage.getItem("Persons"));
+        const orderedLocalPersons = [...localPersons].sort(sortingPerson);
+        console.log(orderedLocalPersons);
+        for (let i = 0; i < orderedLocalPersons.length; i++) {
+            let genero;
+            if (orderedLocalPersons[i].gender == 'm') {
+                genero = "Homem";
+            }
+            else {
+                genero = "Mulher";
+            }
+            data += `
+            <tr>
+                <td>${orderedLocalPersons[i].name}</td>
+                <td>${orderedLocalPersons[i].birth.substring(0, 10)}</td>
+                <td>${genero}</td>
+            </tr>
+            `;
+        }
+        table.innerHTML = `
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Nascimento</th>
+            <th>Gênero</th>
+        </tr>
+    </thead>
+    <tbody>
+        ${data}
+    </tbody>
+    `;
+    }
+}

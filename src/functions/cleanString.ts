@@ -3,6 +3,8 @@
 //     return entrada.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()).trim();
 // }
 
+import { Person } from "../entities/Person";
+
 export function cleanString(entrada:string) {
     let entradaArray: string[] = entrada.trim().toLowerCase().split(' ')
     let saidaNome: string[] = [];
@@ -17,5 +19,8 @@ export function cleanString(entrada:string) {
     return saidaNome.join(' ')
     
 }
+
+export const sorting = (a:Document, b:Document) => a.title.localeCompare(b.title)
+export const sortingPerson = (a:Person, b:Person) => a.name.localeCompare(b.name)
 
 export default cleanString
